@@ -121,66 +121,146 @@ def check_selection(array_position, player):
 
 
 def check_move(player, d1, d2, player_selection, player_move):
-    if player == 1:
-        if player_selection + d1 != player_move and player_selection + d2 != player_move:
-            print("(1)Move unavailable; Please select destination again:")
-            # new_move = int(input("Player 1 selects again where to move the piece:"))
-            # check_move(1, d1, d2, player_selection, new_move)
-            board[35] = 1
-            board[33] = 0
+    if reverse % 2 == 0:
+        if player == 1:
+            if player_selection + d1 != player_move and player_selection + d2 != player_move:
+                print("(1)Move unavailable; Please select destination again:")
+                # new_move = int(input("Player 1 selects again where to move the piece:"))
+                # check_move(1, d1, d2, player_selection, new_move)
+                board[35] = 1
+                board[33] = 0
 
-        elif board[player_move] < -1:
-            print("(2)Move unavailable; Please select destination again:")
-            # new_move = int(input("Player 1 selects again where to move the piece:"))
-            # check_move(1, d1, d2, player_selection, new_move)
-            board[35] = 1
-            board[33] = 0
+            elif board[player_move] < -1:
+                print("(2)Move unavailable; Please select destination again:")
+                # new_move = int(input("Player 1 selects again where to move the piece:"))
+                # check_move(1, d1, d2, player_selection, new_move)
+                board[35] = 1
+                board[33] = 0
 
-        else:
-            move(1, player_selection, player_move)
-            board[35] = 0
+            else:
+                move(1, player_selection, player_move)
+                board[35] = 0
 
-    elif player == 2:
-        if player_selection - d1 != player_move and player_selection - d2 != player_move:
-            print("(1)Move unavailable; Please select destination again:")
-            # new_move = int(input("Player 2 selects again where to move the piece:"))
-            # check_move(2, d1, d2, player_selection, new_move)
-            board[35] = 1
+        elif player == 2:
+            if player_selection - d1 != player_move and player_selection - d2 != player_move:
+                print("(1)Move unavailable; Please select destination again:")
+                # new_move = int(input("Player 2 selects again where to move the piece:"))
+                # check_move(2, d1, d2, player_selection, new_move)
+                board[35] = 1
+                board[33] = 0
 
-        elif board[player_move] > 1:
-            print("(2)Move unavailable; Please select destination again:")
-            # new_move = int(input("Player 1 selects again where to move the piece:"))
-            # check_move(2, d1, d2, player_selection, new_move)
-            board[35] = 1
-        else:
-            move(2, player_selection, player_move)
-            board[35] = 0
+            elif board[player_move] > 1:
+                print("(2)Move unavailable; Please select destination again:")
+                # new_move = int(input("Player 1 selects again where to move the piece:"))
+                # check_move(2, d1, d2, player_selection, new_move)
+                board[35] = 1
+                board[33] = 0
+            else:
+                move(2, player_selection, player_move)
+                board[35] = 0
+    else:
+        if player == 1:
+            if player_selection - d1 != player_move and player_selection - d2 != player_move:
+                print("(1)Move unavailable; Please select destination again:")
+                # new_move = int(input("Player 2 selects again where to move the piece:"))
+                # check_move(2, d1, d2, player_selection, new_move)
+                board[35] = 1
+                board[33] = 0
+
+            elif board[player_move] > 1:
+                print("(2)Move unavailable; Please select destination again:")
+                # new_move = int(input("Player 1 selects again where to move the piece:"))
+                # check_move(2, d1, d2, player_selection, new_move)
+                board[35] = 1
+                board[33] = 0
+            else:
+                move(1, player_selection, player_move)
+                board[35] = 0
+
+        elif player == 2:
+            if player_selection + d1 != player_move and player_selection + d2 != player_move:
+                print("(1)Move unavailable; Please select destination again:")
+                # new_move = int(input("Player 1 selects again where to move the piece:"))
+                # check_move(1, d1, d2, player_selection, new_move)
+                board[35] = 1
+                board[33] = 0
+
+            elif board[player_move] < -1:
+                print("(2)Move unavailable; Please select destination again:")
+                # new_move = int(input("Player 1 selects again where to move the piece:"))
+                # check_move(1, d1, d2, player_selection, new_move)
+                board[35] = 1
+                board[33] = 0
+            else:
+                move(2, player_selection, player_move)
+                board[35] = 0
 
 
 def move(player, player_selection, player_move):
-    if player == 1:
-        if board[player_move] >= 0:
-            board[player_selection] -= 1
-            board[player_move] = board[player_move] + 1
+    if reverse % 2 == 0:
+        if player == 1:
+            if board[player_move] >= 0:
+                board[player_selection] -= 1
+                board[player_move] = board[player_move] + 1
 
-        elif board[player_move] == -1:
-            take_out(1, player_move)
-            board[player_selection] -= 1
+            elif board[player_move] == -1:
+                take_out(1, player_move)
+                board[player_selection] -= 1
 
-        board[30] = board[30] - (player_move - player_selection)
-        board[33] = 0
+            if board[31] == board[30] - (player_move - player_selection):
+                board[32] = 0
+            elif board[32] == board[30] - (player_move - player_selection):
+                board[31] = 0
+            board[30] = board[30] - (player_move - player_selection)
+            board[33] = 0
 
-    elif player == 2:
-        if board[player_move] <= 0:
-            board[player_selection] += 1
-            board[player_move] = board[player_move] - 1
+        elif player == 2:
+            if board[player_move] <= 0:
+                board[player_selection] += 1
+                board[player_move] = board[player_move] - 1
 
-        elif board[player_move] == 1:
-            take_out(2, player_move)
-            board[player_selection] += 1
+            elif board[player_move] == 1:
+                take_out(2, player_move)
+                board[player_selection] += 1
 
-        board[30] = board[30] - (player_selection - player_move)
-        board[33] = 0
+            if board[31] == board[30] - (player_selection - player_move):
+                board[32] = 0
+            elif board[32] == board[30] - (player_selection - player_move):
+                board[31] = 0
+            board[30] = board[30] - (player_selection - player_move)
+            board[33] = 0
+    else:
+        if player == 1:
+            if board[player_move] >= 0:
+                board[player_selection] -= 1
+                board[player_move] = board[player_move] + 1
+
+            elif board[player_move] == -1:
+                take_out(1, player_move)
+                board[player_selection] -= 1
+
+            if board[31] == board[30] - (player_selection - player_move):
+                board[32] = 0
+            elif board[32] == board[30] - (player_selection - player_move):
+                board[31] = 0
+            board[30] = board[30] - (player_selection - player_move)
+            board[33] = 0
+
+        elif player == 2:
+            if board[player_move] <= 0:
+                board[player_selection] += 1
+                board[player_move] = board[player_move] - 1
+
+            elif board[player_move] == 1:
+                take_out(2, player_move)
+                board[player_selection] += 1
+
+            if board[31] == board[30] - (player_move - player_selection):
+                board[32] = 0
+            elif board[32] == board[30] - (player_move - player_selection):
+                board[31] = 0
+            board[30] = board[30] - (player_move - player_selection)
+            board[33] = 0
 
 
 def take_out(player, player_move):
@@ -286,8 +366,12 @@ def draw_board(board1):
     screen.blit(label, (325, 400))
     label = myfont2.render(str(board[30]), 1, WHITE)
     screen.blit(label, (345, 440))
-    label = myfont2.render("Turn: " + str(turn), 1, WHITE)
-    screen.blit(label, (300, 0))
+    if turn % 2 != 0:
+        label = myfont2.render("Player 1's turn", 1, WHITE)
+        screen.blit(label, (238, 0))
+    else:
+        label = myfont2.render("Player 2's turn", 1, WHITE)
+        screen.blit(label, (238, 0))
     pygame.display.update()
 
 
@@ -305,6 +389,7 @@ show_board(board)
 game_over = False
 turn = 1
 double = 0
+reverse = 0
 
 pygame.init()
 myfont = pygame.font.SysFont("monospace", 30)
@@ -339,6 +424,8 @@ while not game_over:
                 if dice1 == dice2:
                     board[30] = 2 * (dice1 + dice2)
                     double += 1
+                    if double % 2 == 0 and double != 0:
+                        reverse += 1
                 else:
                     board[30] = dice1 + dice2
                     double = 0
@@ -353,15 +440,21 @@ while not game_over:
                 if board[27] < 0:
                     selection_entry = int(click_select(posx, posy))
                     print(selection_entry)
-                    check_move(2, dice1, dice2, 25, selection_entry)
+                    if reverse % 2 == 0:
+                        check_move(2, board[31], board[32], 25, selection_entry)
+                    else:
+                        check_move(2, board[31], board[32], 0, selection_entry)
                     if board[35] == 0:
                         board[27] = board[27] + 1
 
-                    print(dice1, dice2, board[30])
+                    print(board[31], board[32], board[30])
                     draw_board(board)
                     show_board(board)
                     if board[30] < 1:
                         turn = turn + 1
+                        board[30] = 0
+                        if double > 0:
+                            turn = turn + 1
 
                 elif board[33] == 0:
                     # selection
@@ -378,28 +471,37 @@ while not game_over:
                 elif board[33] != 0:
                     # move
                     move1 = int(click_select(posx, posy))
-                    check_move(2, dice1, dice2, selection1, move1)
-                    print(dice1, dice2, board[30])
+                    check_move(2, board[31], board[32], selection1, move1)
+                    print(board[31], board[32], board[30])
                     draw_board(board)
                     show_board(board)
                     board[33] = 0
                     if board[30] < 1:
                         turn = turn + 1
+                        board[30] = 0
+                        if double > 0:
+                            turn = turn + 1
 
             elif turn % 2 != 0:
                 player: int = 1
                 if board[26] > 0:
                     selection_entry = int(click_select(posx, posy))
                     print(selection_entry)
-                    check_move(1, board[31], board[32], 0, selection_entry)
+                    if reverse % 2 == 0:
+                        check_move(1, board[31], board[32], 0, selection_entry)
+                    else:
+                        check_move(1, board[31], board[32], 25, selection_entry)
                     if board[35] == 0:
                         board[26] = board[26] - 1
 
-                    print(dice1, dice2, board[30])
+                    print(board[31], board[32], board[30])
                     draw_board(board)
                     show_board(board)
                     if board[30] < 1:
                         turn = turn + 1
+                        board[30] = 0
+                        if double > 0:
+                            turn = turn + 1
                         print(turn)
 
                 elif board[33] == 0:
@@ -410,12 +512,15 @@ while not game_over:
                 elif board[33] != 0:
                     # move
                     move1 = int(click_select(posx, posy))
-                    check_move(1, dice1, dice2, selection1, move1)
-                    print(dice1, dice2, board[30])
+                    check_move(1, board[31], board[32], selection1, move1)
+                    print(board[31], board[32], board[30])
                     draw_board(board)
                     show_board(board)
                     if board[30] < 1:
                         turn = turn + 1
+                        board[30] = 0
+                        if double > 0:
+                            turn = turn + 1
                         print(turn)
 
                 # elif board[35] != 0:
