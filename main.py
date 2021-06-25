@@ -167,7 +167,7 @@ def check_move(player, d1, d2, player_selection, player_move):
                 board[35] = 1
                 board[33] = 0
 
-            elif board[player_move] > 1:
+            elif board[player_move] < -1:
                 print("(2)Move unavailable; Please select destination again:")
                 # new_move = int(input("Player 1 selects again where to move the piece:"))
                 # check_move(2, d1, d2, player_selection, new_move)
@@ -185,7 +185,7 @@ def check_move(player, d1, d2, player_selection, player_move):
                 board[35] = 1
                 board[33] = 0
 
-            elif board[player_move] < -1:
+            elif board[player_move] > 1:
                 print("(2)Move unavailable; Please select destination again:")
                 # new_move = int(input("Player 1 selects again where to move the piece:"))
                 # check_move(1, d1, d2, player_selection, new_move)
@@ -271,6 +271,38 @@ def take_out(player, player_move):
     elif player == 2:
         board[player_move] = -1
         board[26] += 1
+
+
+def remove_pieces (player, value):
+    if reverse % 2 == 0:
+        if player == 1:
+            pieces = 0
+            for i in range(19, 25, 1):
+                if board[i] > 0:
+                    pieces = pieces + board[i]
+            if pieces + board[28] == 15:
+
+        if player == 2:
+            pieces = 0
+            for i in range (1, 7, 1):
+                if board[i] < 0:
+                    pieces = pieces + board[i]
+            if pieces + board[29] == -15:
+
+    else:
+        if player == 1:
+            pieces = 0
+            for i in range(1, 7, 1):
+                if board[i] > 0:
+                    pieces = pieces + board[i]
+            if pieces + board[28] == 15:
+
+        if player == 2:
+            pieces = 0
+            for i in range(19, 25, 1):
+                if board[i] < 0:
+                    pieces = pieces + board[i]
+            if pieces + board[29] == -15:
 
 
 def draw_circles(board1):
@@ -431,7 +463,7 @@ while not game_over:
                     double = 0
                 board[31] = dice1
                 board[32] = dice2
-                print(board[31], board[32], board[30])
+                print(board[31], board[32], board[30], double, reverse)
                 draw_board(board)
                 show_board(board)
 
@@ -447,7 +479,7 @@ while not game_over:
                     if board[35] == 0:
                         board[27] = board[27] + 1
 
-                    print(board[31], board[32], board[30])
+                    print(board[31], board[32], board[30], double, reverse)
                     draw_board(board)
                     show_board(board)
                     if board[30] < 1:
@@ -472,7 +504,7 @@ while not game_over:
                     # move
                     move1 = int(click_select(posx, posy))
                     check_move(2, board[31], board[32], selection1, move1)
-                    print(board[31], board[32], board[30])
+                    print(board[31], board[32], board[30], double, reverse)
                     draw_board(board)
                     show_board(board)
                     board[33] = 0
@@ -494,7 +526,7 @@ while not game_over:
                     if board[35] == 0:
                         board[26] = board[26] - 1
 
-                    print(board[31], board[32], board[30])
+                    print(board[31], board[32], board[30], double, reverse)
                     draw_board(board)
                     show_board(board)
                     if board[30] < 1:
@@ -513,7 +545,7 @@ while not game_over:
                     # move
                     move1 = int(click_select(posx, posy))
                     check_move(1, board[31], board[32], selection1, move1)
-                    print(board[31], board[32], board[30])
+                    print(board[31], board[32], board[30], double, reverse)
                     draw_board(board)
                     show_board(board)
                     if board[30] < 1:
